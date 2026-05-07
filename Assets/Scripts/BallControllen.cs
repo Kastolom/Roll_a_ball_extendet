@@ -16,6 +16,7 @@ public class BallControllen : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 120; // устанавливаем частоту кадров
         rb = GetComponent<Rigidbody>(); // получаем Rigidbody при старте
     }
 

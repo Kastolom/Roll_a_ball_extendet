@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BallControllen : MonoBehaviour
+public class BallController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 10f; // скорость движения шара
     [SerializeField] private Vector3 movementInput; // вектор направления движения

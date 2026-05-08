@@ -3,15 +3,18 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+    GameManager gameManager;
     // Вызывается перед первым кадром
     void Start()
     {
+        gameManager = GameManager.instance;
         StartCoroutine(RotateY());
     }
 
     // Вызывается при попадании коллайдера в триггер
     void OnTriggerEnter(Collider other)
     {
+        gameManager.AddCoin();
         Destroy(gameObject);
     }
 

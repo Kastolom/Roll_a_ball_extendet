@@ -6,6 +6,11 @@ public class BallController : MonoBehaviour
     [SerializeField] private Vector3 movementInput; // вектор направления движения
     [SerializeField] private float jumpForce = 5f; // сила прыжка
 
+    // НОВЫЕ ПЕРЕМЕННЫЕ
+    [Header("Dash Settings")]
+    [SerializeField] private float dashForce = 10f; // Сила рывка
+    [SerializeField] private KeyCode dashKey = KeyCode.LeftShift; // Клавиша для рывка
+
     private Rigidbody rb; // компонент Rigidbody шара
     private bool isGrounded; // флаг, находится ли шар на земле
 
@@ -26,6 +31,29 @@ public class BallController : MonoBehaviour
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
         }
+
+        // ЛОГИКА РЫВКА
+        // Проверяем нажатие клавиши рывка
+        if (Input.GetKeyDown(dashKey))
+        {
+            Dash();
+        }
+    }
+
+    private void Dash()
+    {
+        // Вычисляем направление рывка. 
+        // Если игрок никуда не жмет, рывок пойдет вперед (по оси Z).
+        // Если жмет кнопки движения — в сторону движения.
+        Vector3 dashDirection = movementInput.normalized;
+
+        if (dashDirection == Vector3.zero)
+        {
+            dashDirection = transform.forward; 
+        }
+
+        // Прикладываем мгновенную силу
+        rb.AddForce(dashDirection * dashForce, ForceMode.Impulse);
     }
 
     void FixedUpdate()
@@ -50,5 +78,7 @@ public class BallController : MonoBehaviour
         {
             isGrounded = false;
         }
+
+        // добавил просто комментарий
     }
 }

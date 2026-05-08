@@ -242,7 +242,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 599a0d7afbd5c65459fb07875681dfc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIView
-  scoreText: {fileID: 0}
+  score: {fileID: 2034219978}
+  yourWinText: {fileID: 939359701}
 --- !u!1 &211407256
 GameObject:
   m_ObjectHideFlags: 0
@@ -1384,6 +1385,8 @@ MonoBehaviour:
   moveSpeed: 10
   movementInput: {x: 0, y: 0, z: 0}
   jumpForce: 8
+  dashForce: 10
+  dashKey: 304
 --- !u!135 &934245506
 SphereCollider:
   m_ObjectHideFlags: 0

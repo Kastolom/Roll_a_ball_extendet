@@ -12,9 +12,10 @@ public class Coin : MonoBehaviour
     // Вызывается при попадании коллайдера в триггер
     void OnTriggerEnter(Collider other)
     {
+        GameManager.instance.AddCoin(1);
         Destroy(gameObject);
     }
-
+    
     // Корутина вращения монеты вокруг оси Y
     IEnumerator RotateY()
     {

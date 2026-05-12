@@ -23,9 +23,12 @@ public class UIView : MonoBehaviour
         yourWinText.SetActive(true);
     }
 
+<<<<<<< HEAD
      private void OnGameLoose() // метод, вызывающийся при поражении
     {
         // заглушка метода OnGameLoose
     }
 
+=======
+>>>>>>> c5308fb5384a8e00cfa56a737992ca189703f361
 }

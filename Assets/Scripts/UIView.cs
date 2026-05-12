@@ -18,9 +18,11 @@ public class UIView : MonoBehaviour
         score.text = GameManager.instance.coinCount.ToString();
     }
 
-    private void OnGameWin()
+    private void OnGameWin() // метод, вызывающийся при победе
     {
         yourWinText.SetActive(true);
     }
+
+
 
 }

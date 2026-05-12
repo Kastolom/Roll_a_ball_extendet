@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
     }
-    public void AddCoin(int _coinCount)
+    public void AddCoin(int _coinCount) // метод добавления очков
     {
         coinCount += _coinCount;
         if (coinCount >= coinForWin)

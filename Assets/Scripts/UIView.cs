@@ -23,4 +23,9 @@ public class UIView : MonoBehaviour
         yourWinText.SetActive(true);
     }
 
+    private void MyOnGameLoose()
+    {
+        //yourWinText.SetActive(true);
+    }
+
 }

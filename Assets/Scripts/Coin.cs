@@ -3,26 +3,27 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    // Вызывается перед первым кадром
-    void Start()
+    [Header("Coin Settings")]
+    [SerializeField] private int coinValue = 1;
+
+    [Header("Rotation")]
+    [SerializeField] private float rotateSpeed = 90f;
+
+    private void Update()
     {
-        StartCoroutine(RotateY());
+        transform.Rotate(0, rotateSpeed * Time.deltaTime, 0);
     }
 
-    // Вызывается при попадании коллайдера в триггер
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        GameManager.instance.AddCoin(1);
+        // Проверяем что это игрок
+        if (!other.CompareTag("Player"))
+            return;
+
+        // Добавляем очки
+        GameManager.instance.AddCoin(coinValue);
+
+        // Уничтожаем монету
         Destroy(gameObject);
-    }
-    
-    // Корутина вращения монеты вокруг оси Y
-    IEnumerator RotateY()
-    {
-        while (true)
-        {
-            transform.Rotate(0, 0, 90 * Time.deltaTime);
-            yield return null;
-        }
     }
 }

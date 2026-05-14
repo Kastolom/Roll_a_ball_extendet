@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
+    // Сделаем экземпляр класса шара статическим, потому что он будет в единственном экземпляре и нам будет удобно к нему обращаться из других классов
+    public static BallController instance; // статический экземпляр класса BallController
     [SerializeField] private float moveSpeed = 10f; // скорость движения шара
     [SerializeField] private Vector3 movementInput; // вектор направления движения
     [SerializeField] private float jumpForce = 5f; // сила прыжка
@@ -14,6 +16,10 @@ public class BallController : MonoBehaviour
     private Rigidbody rb; // компонент Rigidbody шара
     private bool isGrounded; // флаг, находится ли шар на земле
 
+    void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         Application.targetFrameRate = 120; // устанавливаем частоту кадров
@@ -32,7 +38,6 @@ public class BallController : MonoBehaviour
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
         }
 
-        // ЛОГИКА РЫВКА
         // Проверяем нажатие клавиши рывка
         if (Input.GetKeyDown(dashKey))
         {
@@ -43,14 +48,9 @@ public class BallController : MonoBehaviour
     private void Dash()
     {
         // Вычисляем направление рывка. 
-        // Если игрок никуда не жмет, рывок пойдет вперед (по оси Z).
+        // Если игрок никуда не жмет, то и рывка не будет.
         // Если жмет кнопки движения — в сторону движения.
         Vector3 dashDirection = movementInput.normalized;
-
-        if (dashDirection == Vector3.zero)
-        {
-            dashDirection = transform.forward; 
-        }
 
         // Прикладываем мгновенную силу
         rb.AddForce(dashDirection * dashForce, ForceMode.Impulse);
@@ -78,7 +78,6 @@ public class BallController : MonoBehaviour
         {
             isGrounded = false;
         }
-
-        // добавил просто комментарий
+        
     }
 }

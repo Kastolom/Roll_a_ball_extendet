@@ -13,6 +13,9 @@ public class BallController : MonoBehaviour
     [SerializeField] private float dashForce = 10f; // Сила рывка
     [SerializeField] private KeyCode dashKey = KeyCode.LeftShift; // Клавиша для рывка
 
+    [Header("Lose Settings")]
+    [SerializeField] private float loseYLevel = -5f;
+
     private Rigidbody rb; // компонент Rigidbody шара
     private bool isGrounded; // флаг, находится ли шар на земле
 
@@ -28,6 +31,8 @@ public class BallController : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.instance.CurrentState != GameState.Playing)
+            return;
         // считываем ввод с клавиатуры/геймпада по осям
         movementInput.x = Input.GetAxis("Horizontal"); // лево-право (A/D, стрелки)
         movementInput.z = Input.GetAxis("Vertical");   // вперед-назад (W/S, стрелки)
@@ -42,6 +47,12 @@ public class BallController : MonoBehaviour
         if (Input.GetKeyDown(dashKey))
         {
             Dash();
+        }
+
+         // ПРОИГРЫШ
+        if (transform.position.y < loseYLevel)
+        {
+            GameManager.instance.LoseGame();
         }
     }
 
@@ -58,6 +69,8 @@ public class BallController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.instance.CurrentState != GameState.Playing)
+            return;
         // применяем силу к Rigidbody для физического движения
         rb.AddForce(movementInput * moveSpeed);
     }

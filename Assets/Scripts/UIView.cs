@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI score;
+    [SerializeField] private GameObject infoPanel;
     [SerializeField] private GameObject yourWinText;
     [SerializeField] private GameObject loseText;
     [SerializeField] private GameObject restartText;
@@ -23,14 +24,14 @@ public class UIView : MonoBehaviour
 
     private void OnGameWin() // метод, вызывающийся при победе
     {
+        infoPanel.SetActive(true);
         yourWinText.SetActive(true);
-        restartText.SetActive(true);
     }
 
     private void OnGameLose()
     {
+        infoPanel.SetActive(true);
         loseText.SetActive(true);
-        restartText.SetActive(true);
     }
 
 }

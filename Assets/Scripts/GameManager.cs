@@ -5,33 +5,36 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance; // статический экземпляр класса GameManager
-    public const int coinForWin = 5; // количество очков для победы
-    public int coinCount {get; private set; } // текущий счет игры
-     public GameState CurrentState { get; private set; }
+    public const int coinForWin = 15; // количество очков для победы
+    public int coinCount { get; private set; } // текущий счет игры
+    public GameState CurrentState { get; private set; } // текущее состояние игры
     public event Action OnCoinCountChanged; // событие изменения счета
     public event Action OnGameWin; // событие победы
-    public event Action OnGameLose;
-    public event Action<GameState> OnGameStateChanged;
+    public event Action OnGameLose; // событие поражения
+    public event Action<GameState> OnGameStateChanged; // событие изменения состояния игры
 
-    void Awake()
+    void Awake() // метод, вызывающийся при загрузке объекта
     {
         instance = this;
     }
 
-    private void Start()
+    private void Start() // метод, вызывающийся при старте игры
     {
+        Application.targetFrameRate = 120; // устанавливаем частоту кадров
         ChangeState(GameState.Playing);
     }
 
-    private void Update()
+    private void Update() // метод, вызывающийся каждый кадр
     {
         if (CurrentState == GameState.Win ||
             CurrentState == GameState.Lose)
         {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RestartGame();
-        }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                RestartGame();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
         }
     }
 
@@ -50,7 +53,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-     public void WinGame()
+    public void WinGame()
     {
         ChangeState(GameState.Win);
 

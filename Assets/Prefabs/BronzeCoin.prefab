@@ -127,4 +127,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Coin
   coinValue: 1
-  rotateSpeed: 90
+  collectSound: {fileID: 8300000, guid: 0b837236c6a1acf4b8c46f307aafb009, type: 3}

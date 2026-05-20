@@ -5,6 +5,8 @@ public class Coin : MonoBehaviour
 {
     [Header("Coin Settings")]
     [SerializeField] private int coinValue = 1;
+    [Header("Audio")]   
+    [SerializeField] private AudioClip collectSound;
    
     private float rotateSpeed; // случайная скорость вращения для каждой монеты своя
     private float curentRotatSpeed; // текущая скорость вращения
@@ -37,6 +39,10 @@ public class Coin : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Destroy(GetComponent<Collider>()); // удаляем коллайдер чтобы не было повторного сбора
+            // звук
+            AudioSource.PlayClipAtPoint(
+            collectSound,
+            transform.position, 2f);
             GameManager.instance.AddCoin(coinValue);
             StartCoroutine(CoinDestroyAnima()); // запускаем анимацию уничтожения монеты
         }

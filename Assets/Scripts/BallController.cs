@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BallController : MonoBehaviour
 {
@@ -14,7 +15,8 @@ public class BallController : MonoBehaviour
     [SerializeField] private KeyCode dashKey = KeyCode.LeftShift; // Клавиша для рывка
 
     [Header("Lose Settings")]
-    [SerializeField] private float loseYLevel = -5f;
+    [SerializeField] private float loseYLevel = -5f; // уровень Y, при достижении которого игра проиграна
+    private List<Collision> curentColiders = new List<Collision>();
 
     private Rigidbody rb; // компонент Rigidbody шара
     private bool isGrounded; // флаг, находится ли шар на земле
@@ -79,6 +81,8 @@ public class BallController : MonoBehaviour
         // проверяем, что шар коснулся земли
         if (collision.gameObject.CompareTag("Ground"))
         {
+            curentColiders.Add(collision);
+            Debug.Log("Входим в контакт с землей количество контактов: " + curentColiders.Count);
             isGrounded = true;
         }
     }
@@ -86,10 +90,13 @@ public class BallController : MonoBehaviour
     void OnCollisionExit(Collision collision)
     {
         // проверяем, что шар оторвался от земли
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") &&
+        curentColiders.Contains(collision))
         {
+            curentColiders.Remove(collision);
+            Debug.Log("Выходим из контакта с землей количество контактов: " + curentColiders.Count);
+            if (curentColiders.Count == 0)
             isGrounded = false;
-        }
-        
+        } 
     }
 }

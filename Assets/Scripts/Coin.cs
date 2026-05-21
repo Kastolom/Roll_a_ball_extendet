@@ -12,12 +12,14 @@ public class Coin : MonoBehaviour
     private float curentRotatSpeed; // текущая скорость вращения
     private Renderer _renderer; // ссылка на Renderer для изменения прозрачности
     private Material _material; // ссылка на материал
+    [SerializeField] private GameObject textCoin; // ссылка на объект с текстом с количеством монет
     private void Start() //Запускаем 1 раз при запуске игры до обновления 1-го кадра
     {
-        StartCoroutine(RotateY()); // запускаем корутину вращения монеты
         _renderer = GetComponent<Renderer>(); // получаем ссылку на Renderer
         _material = _renderer.material; // получаем материал
         rotateSpeed = Random.Range(10f, 30f); // задаем случайную скорость вращения
+
+        StartCoroutine(RotateY()); // запускаем корутину вращения монеты
     }
     private void Update()
     {
@@ -44,6 +46,7 @@ public class Coin : MonoBehaviour
             collectSound,
             transform.position, 2f);
             GameManager.instance.AddCoin(coinValue);
+            textCoin.SetActive(true); // включаем текст с количеством монет
             StartCoroutine(CoinDestroyAnima()); // запускаем анимацию уничтожения монеты
         }
     }
@@ -79,5 +82,6 @@ public class Coin : MonoBehaviour
         }
         
         Destroy(gameObject);
+        Destroy(textCoin);
     }
 }

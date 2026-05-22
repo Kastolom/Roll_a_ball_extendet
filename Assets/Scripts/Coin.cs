@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
@@ -7,12 +8,11 @@ public class Coin : MonoBehaviour
     [SerializeField] private int coinValue = 1;
     [Header("Audio")]   
     [SerializeField] private AudioClip collectSound;
-   
     private float rotateSpeed; // случайная скорость вращения для каждой монеты своя
     private float curentRotatSpeed; // текущая скорость вращения
-    private Renderer _renderer; // ссылка на Renderer для изменения прозрачности
+    private Renderer _renderer; // ссылка на Renderer для изменения прозрачности монеты
     private Material _material; // ссылка на материал
-    [SerializeField] private GameObject textCoin; // ссылка на объект с текстом с количеством монет
+    [SerializeField] private TextMeshPro textCoin; // ссылка на объект с текстом с количеством монет
     private void Start() //Запускаем 1 раз при запуске игры до обновления 1-го кадра
     {
         _renderer = GetComponent<Renderer>(); // получаем ссылку на Renderer
@@ -46,7 +46,7 @@ public class Coin : MonoBehaviour
             collectSound,
             transform.position, 2f);
             GameManager.instance.AddCoin(coinValue);
-            textCoin.SetActive(true); // включаем текст с количеством монет
+            textCoin.gameObject.SetActive(true); // включаем текст с количеством монет
             StartCoroutine(CoinDestroyAnima()); // запускаем анимацию уничтожения монеты
         }
     }
@@ -70,14 +70,18 @@ public class Coin : MonoBehaviour
 
         float duration = 0.5f; // длительность анимации
         
-        Color startColor = _material.color; // сохраняем начальный цвет
-        Color targetColor = startColor; // устанавливаем конечный цвет
+        Color startColor = _material.color; // сохраняем начальный цвет монетки
+        Color targetColor = startColor; // устанавливаем конечный цвет монетки
+        Color startTextColor = textCoin.color; // сохраняем начальный цвет текста
+        Color targetTextColor = startTextColor; // устанавливаем конечный цвет текста
+        targetTextColor.a = 0f; // делаем текст прозрачным
         targetColor.a = 0f;
         
         for (float t = 0; t < duration; t += Time.deltaTime)
         {
             transform.position = Vector3.Lerp(startPosition, targetPosition, t / duration);
             _material.color = Color.Lerp(startColor, targetColor, t / duration);
+            textCoin.color = Color.Lerp(startTextColor, targetTextColor, t / duration);
             yield return null;
         }
         

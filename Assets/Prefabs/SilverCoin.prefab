@@ -161,7 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Coin
   coinValue: 2
   collectSound: {fileID: 8300000, guid: 0b837236c6a1acf4b8c46f307aafb009, type: 3}
-  textCoin: {fileID: 7484286476645080170}
+  textCoin: {fileID: 7086737593240068073}
 --- !u!1 &7484286476645080170
 GameObject:
   m_ObjectHideFlags: 0

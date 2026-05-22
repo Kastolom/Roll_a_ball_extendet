@@ -27,6 +27,7 @@ public class BallController : MonoBehaviour
     }
     void Start()
     {
+        GameManager.instance.OnGameWin += StopMoving;
         rb = GetComponent<Rigidbody>(); // получаем Rigidbody при старте
     }
 
@@ -66,6 +67,12 @@ public class BallController : MonoBehaviour
 
         // Прикладываем мгновенную силу
         rb.AddForce(dashDirection * dashForce, ForceMode.Impulse);
+    }
+
+    private void StopMoving()
+    {
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 
     void FixedUpdate()

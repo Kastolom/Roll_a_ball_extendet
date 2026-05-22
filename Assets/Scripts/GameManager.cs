@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
     {
         ChangeState(GameState.Win);
 
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
 
         OnGameWin?.Invoke();
     }

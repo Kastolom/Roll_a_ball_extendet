@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public event Action OnCoinCountChanged; // событие изменения счета
     public event Action OnGameWin; // событие победы
     public event Action OnGameLose; // событие поражения
+    public event Action<float> OnJumpBarChange; // событие активации прыжка
+    public event Action<float> OnDashBarChange; // событие активации рывка
     public event Action<GameState> OnGameStateChanged; // событие изменения состояния игры
 
     void Awake() // метод, вызывающийся при загрузке объекта
@@ -56,9 +58,7 @@ public class GameManager : MonoBehaviour
     public void WinGame()
     {
         ChangeState(GameState.Win);
-
         //Time.timeScale = 0f;
-
         OnGameWin?.Invoke();
     }
 
@@ -67,22 +67,28 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.Lose);
 
         Time.timeScale = 0f;
-
         OnGameLose?.Invoke();
     }
 
     public void ChangeState(GameState newState)
     {
         CurrentState = newState;
-
         OnGameStateChanged?.Invoke(CurrentState);
     }
 
     public void RestartGame()
     {
         Time.timeScale = 1f;
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+    
+    public void JumpBarChange( float _jumpBarCurent)
+    {
+        OnJumpBarChange?.Invoke(_jumpBarCurent);
+    }
 
+    public void DashBarChange(float _dashBarCurent)
+    {
+        OnDashBarChange?.Invoke(_dashBarCurent);
+    }
 }

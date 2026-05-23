@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    [Header("Coin Settings")]
     [SerializeField] private int coinValue = 1;
-    [Header("Audio")]   
     [SerializeField] private AudioClip collectSound;
     private float rotateSpeed; // случайная скорость вращения для каждой монеты своя
     private float curentRotatSpeed; // текущая скорость вращения
     private Renderer _renderer; // ссылка на Renderer для изменения прозрачности монеты
     private Material _material; // ссылка на материал
     [SerializeField] private TextMeshPro textCoin; // ссылка на объект с текстом с количеством монет
+    
     private void Start() //Запускаем 1 раз при запуске игры до обновления 1-го кадра
     {
         _renderer = GetComponent<Renderer>(); // получаем ссылку на Renderer

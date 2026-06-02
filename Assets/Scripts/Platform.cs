@@ -5,7 +5,7 @@ public class Platform : MonoBehaviour
 {
     [Header("Для движущейся платформы")]
     [SerializeField] private bool isMoving; // перемещается ли платформа
-    [SerializeField] private float moveDuration; // продолжительность перемещения платформы в одне сторону
+    [SerializeField] private float moveSpeed; // скорость движения платформы
     [SerializeField] private Vector3 moveDirection; // направление движения платформы и амплитуда
 
     [Header("Для вращающейся платформы")]
@@ -24,18 +24,43 @@ public class Platform : MonoBehaviour
     void Start()
     {
         if(isMoving) StartCoroutine(MovePlatformAnima());
+        if(isRotating) StartCoroutine(RotatePlatformAnima());
+        if(isSwinging) StartCoroutine(SwingPlatformAnima());
     }
 
     IEnumerator MovePlatformAnima()
-    {
-        //float smoothSpeed = 0.3f;
-        //Vector3 velocity = Vector3.zero;
+    {   
         Vector3 startPosition = transform.position;
         Vector3 newPosition = startPosition + moveDirection;
         while(true)
         {
-            transform.position = Vector3.Lerp(startPosition, newPosition, Mathf.PingPong(Time.time, moveDuration) / moveDuration);
-            //transform.position = Vector3.SmoothDamp(startPosition, newPosition, ref velocity, smoothSpeed);
+            float wave = Mathf.Sin(Time.time * moveSpeed); // -1 до 1
+            float pingPongValue = (wave + 1f) / 2f; // 0 до 1
+
+            transform.position = Vector3.Lerp(startPosition, newPosition, pingPongValue);
+            yield return null;
+        }
+    }
+
+    IEnumerator RotatePlatformAnima()
+    {
+        while(true) 
+        {
+            transform.Rotate(rotateDirection * rotateSpeed * Time.deltaTime);
+            yield return null;
+        }        
+    }
+
+    IEnumerator SwingPlatformAnima()
+    {
+        Vector3 startRotation = transform.rotation.eulerAngles;
+        Vector3 newRotation = startRotation + swingDirection;
+        while(true)
+        {
+            float wave = Mathf.Sin(Time.time * swingSpeed); // -1 до 1
+            float pingPongValue = (wave + 1f) / 2f; // 0 до 1
+
+            transform.rotation = Quaternion.Euler(Vector3.Lerp(startRotation, newRotation, pingPongValue));
             yield return null;
         }
     }

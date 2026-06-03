@@ -102,6 +102,7 @@ public class BallController : MonoBehaviour
         rb.AddForce(movementInput * moveSpeed);
     }
 
+
     void OnCollisionEnter(Collision collision) // метод, вызываемый при столкновении с другим объектом
     {
         // проверяем, что шар коснулся земли

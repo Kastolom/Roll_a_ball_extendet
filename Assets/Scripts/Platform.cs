@@ -18,11 +18,16 @@ public class Platform : MonoBehaviour
     [SerializeField] private float swingSpeed; // скорость качания платформы
     [SerializeField] private Vector3 swingDirection; // направление качания платформы и амплитуда
 
+
     [Header("Для падающей платформы")]
     [SerializeField] bool isFalling; // падает ли платформа
+    private Renderer _renderer;
+    private Material _material;
     
     void Start()
     {
+        _renderer = GetComponent<Renderer>();
+         _material = _renderer.material;
         if(isMoving) StartCoroutine(MovePlatformAnima());
         if(isRotating) StartCoroutine(RotatePlatformAnima());
         if(isSwinging) StartCoroutine(SwingPlatformAnima());
@@ -63,5 +68,37 @@ public class Platform : MonoBehaviour
             transform.rotation = Quaternion.Euler(Vector3.Lerp(startRotation, newRotation, pingPongValue));
             yield return null;
         }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if(isFalling) StartCoroutine(FallPlatformAnima());
+    }
+    IEnumerator FallPlatformAnima()
+    {
+        Color _colorFall = Color.yellow;
+        Color _color = _material.color; // устанавливаем начальный цвет
+        _material.color = _colorFall; // меняем цвет на красный
+        yield return new WaitForSeconds(0.1f);
+        _material.color = _color; // возвращаем начальный цвет
+        yield return new WaitForSeconds(0.9f);
+        _material.color = _colorFall; // меняем цвет на красный
+        yield return new WaitForSeconds(0.1f);
+        _material.color = _color; // возвращаем начальный цвет
+        yield return new WaitForSeconds(0.6f);
+         _material.color = _colorFall; // меняем цвет на красный
+        yield return new WaitForSeconds(0.1f);
+        _material.color = _color; // возвращаем начальный цвет
+        yield return new WaitForSeconds(0.4f);
+         _material.color = _colorFall; // меняем цвет на красный
+        yield return new WaitForSeconds(0.1f);
+        _material.color = _color; // возвращаем начальный цвет
+        yield return new WaitForSeconds(0.2f);
+         _material.color = _colorFall; // меняем цвет на красный
+        yield return new WaitForSeconds(0.1f);
+
+        Destroy(gameObject.GetComponent<Platform>());
+        Rigidbody _rigidbody = gameObject.AddComponent<Rigidbody>();
+        _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;    
     }
 }

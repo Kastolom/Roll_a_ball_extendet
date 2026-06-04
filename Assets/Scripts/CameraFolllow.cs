@@ -26,6 +26,7 @@ public class CameraFolllow : MonoBehaviour
         //transform.LookAt(target); // поворачиваем камеру, чтобы она смотрела на цель
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
+        GameManager.instance.ZoomChange(scroll);
         targetZoom -= scroll * zoomSpeed;
         targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetZoom, Time.deltaTime * zoomSpeed);

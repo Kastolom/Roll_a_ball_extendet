@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public event Action<float> OnJumpBarChange; // событие активации прыжка
     public event Action<float> OnDashBarChange; // событие активации рывка
     public event Action<GameState> OnGameStateChanged; // событие изменения состояния игры
+    public event Action<float> OnZoomChange; // событие изменения зума
 
     void Awake() // метод, вызывающийся при загрузке объекта
     {
@@ -90,5 +91,10 @@ public class GameManager : MonoBehaviour
     public void DashBarChange(float _dashBarCurent)
     {
         OnDashBarChange?.Invoke(_dashBarCurent);
+    }
+
+    public void ZoomChange(float _zoom)
+    {
+        OnZoomChange?.Invoke(_zoom);
     }
 }

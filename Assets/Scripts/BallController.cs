@@ -57,7 +57,7 @@ public class BallController : MonoBehaviour
             GameManager.instance.JumpBarChange(jumpBarCurent);
         }
 
-        if (Input.GetKey(dashKey))
+        if (Input.GetKey(dashKey)) // удерживание клавиши для рывка
         {
             if (dashBarCurent <= 1)
             {
@@ -68,7 +68,7 @@ public class BallController : MonoBehaviour
             
         }
 
-        if (Input.GetKeyUp(dashKey))
+        if (Input.GetKeyUp(dashKey)) // Отпускание клавиши рывка
         {
 
             // Вычисляем направление рывка. 

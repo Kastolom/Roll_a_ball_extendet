@@ -23,6 +23,7 @@ public class UIView : MonoBehaviour
         GameManager.instance.OnJumpBarChange += JumpBarActivate;
         GameManager.instance.OnDashBarChange += DashBarActivate;
         GameManager.instance.OnZoomChange += ShowZoomInfo;
+        GameManager.instance.timerScript.OnTick += UpdateTimer;
     }
 
     private void OnAddCoin()
@@ -57,6 +58,11 @@ public class UIView : MonoBehaviour
     private void ShowZoomInfo(float _zoom)
     {
         StartCoroutine(ZoomInfoAnima(_zoom));
+    }
+
+    private void UpdateTimer()
+    {
+        
     }
 
     IEnumerator ZoomInfoAnima(float _zoom)

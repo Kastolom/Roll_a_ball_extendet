@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance; // статический экземпляр класса GameManager
+    public Timer timerScript = new Timer(); //скрипт таймера
     public const int coinForWin = 15; // количество очков для победы
     public int coinCount { get; private set; } // текущий счет игры
     public GameState CurrentState { get; private set; } // текущее состояние игры
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     void Awake() // метод, вызывающийся при загрузке объекта
     {
         instance = this;
+        timerScript = new Timer();
     }
 
     private void Start() // метод, вызывающийся при старте игры

@@ -447,6 +447,7 @@ GameObject:
   - component: {fileID: 179540615}
   - component: {fileID: 179540614}
   - component: {fileID: 179540616}
+  - component: {fileID: 179540617}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -466,6 +467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da87c8cddc4b954290602cd8afc9692, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  timerScript: {fileID: 179540617}
 --- !u!4 &179540615
 Transform:
   m_ObjectHideFlags: 0
@@ -494,6 +496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIView
   score: {fileID: 2034219978}
+  targetScore: {fileID: 305431856}
   infoPanel: {fileID: 1807470908}
   yourWinText: {fileID: 1645897759}
   loseText: {fileID: 1518670367}
@@ -502,6 +505,19 @@ MonoBehaviour:
   progressBarDash: {fileID: 59654234}
   zoomAdd: {fileID: 1418972293}
   zoomSub: {fileID: 1995809427}
+  timerText: {fileID: 1021506275}
+--- !u!114 &179540617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179540613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f856717a988f4ab429276b43924765bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Timer
 --- !u!1 &211407256
 GameObject:
   m_ObjectHideFlags: 0

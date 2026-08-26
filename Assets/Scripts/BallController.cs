@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 public class BallController : MonoBehaviour
 {
-    // Сделаем экземпляр класса шара статическим, потому что он будет в единственном экземпляре и нам будет удобно к нему обращаться из других классов
-    public static BallController instance; // статический экземпляр класса BallController
     [SerializeField] private float moveSpeed = 10f; // скорость движения шара
     [SerializeField] private Vector3 movementInput; // вектор направления движения
     [SerializeField] private float jumpForce = 5f; // максимальная сила прыжка
@@ -18,23 +16,20 @@ public class BallController : MonoBehaviour
     [SerializeField] private KeyCode dashKey = KeyCode.LeftShift; // Клавиша для рывка
     [SerializeField] private float loseYLevel = -5f; // уровень Y, при достижении которого игра проиграна
     private List<Collision> curentColiders = new List<Collision>();
-
     private Rigidbody rb; // компонент Rigidbody шара
     private bool isGrounded; // флаг, находится ли шар на земле
+    private GameManager gameManager;
 
-    void Awake()
-    {
-        instance = this;
-    }
+
     void Start()
     {
-        GameManager.instance.OnGameWin += StopMoving;
+        gameManager = FindAnyObjectByType<GameManager>(); // получаем GameManager из всех объектов в сцене
         rb = GetComponent<Rigidbody>(); // получаем Rigidbody при старте
     }
 
     void Update()
     {
-        if (GameManager.instance.CurrentState != GameState.Playing)
+        if (gameManager.CurrentState != GameState.Playing)
             return;
         // считываем ввод с клавиатуры/геймпада по осям
         movementInput.x = Input.GetAxis("Horizontal"); // лево-право (A/D, стрелки)
@@ -46,7 +41,7 @@ public class BallController : MonoBehaviour
             {
                 jumpBarCurent += jumpBarSpeed * Time.deltaTime;
                 jumpForceCurent = jumpForce * jumpBarCurent;
-                GameManager.instance.JumpBarChange(jumpBarCurent);
+                gameManager.JumpBarChange(jumpBarCurent);
             }
         }
 
@@ -54,7 +49,7 @@ public class BallController : MonoBehaviour
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForceCurent, rb.linearVelocity.z);
             jumpBarCurent = 0;
-            GameManager.instance.JumpBarChange(jumpBarCurent);
+            gameManager.JumpBarChange(jumpBarCurent);
         }
 
         if (Input.GetKey(dashKey)) // удерживание клавиши для рывка
@@ -63,7 +58,7 @@ public class BallController : MonoBehaviour
             {
                 dashBarCurent += dashBarSpeed * Time.deltaTime;
                 dashForceCurent = dashForce * dashBarCurent;
-                GameManager.instance.DashBarChange(dashBarCurent);
+                gameManager.DashBarChange(dashBarCurent);
             }
             
         }
@@ -78,13 +73,14 @@ public class BallController : MonoBehaviour
             // Прикладываем мгновенную силу
             rb.AddForce(dashDirection * dashForceCurent, ForceMode.Impulse);
             dashBarCurent = 0;
-            GameManager.instance.DashBarChange(dashBarCurent);
+            gameManager.DashBarChange(dashBarCurent);
         }
 
         // ПРОИГРЫШ
         if (transform.position.y < loseYLevel)
         {
-            GameManager.instance.LoseGame();
+            gameManager.LoseGame();
+            StopMoving();
         }
     }
 
@@ -96,7 +92,7 @@ public class BallController : MonoBehaviour
 
     void FixedUpdate() 
     {
-        if (GameManager.instance.CurrentState != GameState.Playing)
+        if (gameManager.CurrentState != GameState.Playing)
             return;
         // применяем силу к Rigidbody для физического движения
         rb.AddForce(movementInput * moveSpeed);

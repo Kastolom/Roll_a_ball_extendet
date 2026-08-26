@@ -12,11 +12,17 @@ public class CameraFolllow : MonoBehaviour
     [SerializeField] private float maxZoom; // максимальное приближение камеры++
     private Camera cam;
     private float targetZoom;
+    private GameManager gameManager;
+    private BallController ballController;
+
     private void Start()
     {
+        gameManager = FindAnyObjectByType<GameManager>(); // получаем экземпляр GameManager
+        ballController = FindAnyObjectByType<BallController>(); // получаем экземпляр BallController
+
         cam = GetComponent<Camera>();
         targetZoom = cam.fieldOfView;
-        target = BallController.instance.transform;
+        target = ballController.transform;
         offset = transform.position - target.position; // вычисляем смещение камеры относительно цели
     }
     private void LateUpdate() // метод, вызывающийся после всех обновлений в кадре
@@ -26,7 +32,7 @@ public class CameraFolllow : MonoBehaviour
         //transform.LookAt(target); // поворачиваем камеру, чтобы она смотрела на цель
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-        GameManager.instance.ZoomChange(scroll);
+        gameManager.ZoomChange(scroll);
         targetZoom -= scroll * zoomSpeed;
         targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetZoom, Time.deltaTime * zoomSpeed);

@@ -4,29 +4,33 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance; // статический экземпляр класса GameManager
-    public Timer timerScript = new Timer(); //скрипт таймера
+    //public static GameManager instance; // статический экземпляр класса GameManager
+    [SerializeField] public Timer timerScript; //скрипт таймера
     public const int coinForWin = 15; // количество очков для победы
-    public int coinCount { get; private set; } // текущий счет игры
+    public int curentCoin { get; private set; } // текущий счет игры
     public GameState CurrentState { get; private set; } // текущее состояние игры
-    public event Action OnCoinCountChanged; // событие изменения счета
-    public event Action OnGameWin; // событие победы
-    public event Action OnGameLose; // событие поражения
-    public event Action<float> OnJumpBarChange; // событие активации прыжка
-    public event Action<float> OnDashBarChange; // событие активации рывка
-    public event Action<GameState> OnGameStateChanged; // событие изменения состояния игры
-    public event Action<float> OnZoomChange; // событие изменения зума
+    public static event Action<int, int> OnCoinCountChanged; // событие изменения счета
+    public static event Action OnGameWin; // событие победы
+    public static event Action OnGameLose; // событие поражения
+    public static event Action<float> OnJumpBarChange; // событие активации прыжка
+    public static event Action<float> OnDashBarChange; // событие активации рывка
+    //public event Action<GameState> OnGameStateChanged; // событие изменения состояния игры
+    public static event Action<float> OnZoomChange; // событие изменения зума
 
-    void Awake() // метод, вызывающийся при загрузке объекта
+    void OnEnable()
     {
-        instance = this;
-        timerScript = new Timer();
+        timerScript.OnFinished += LoseGame;
     }
-
+    void OnDisable()
+    {
+        timerScript.OnFinished -= LoseGame;
+    }
     private void Start() // метод, вызывающийся при старте игры
     {
         Application.targetFrameRate = 120; // устанавливаем частоту кадров
         ChangeState(GameState.Playing);
+        timerScript.StartTimer(20);
+        OnCoinCountChanged?.Invoke(curentCoin, coinForWin);
     }
 
     private void Update() // метод, вызывающийся каждый кадр
@@ -48,11 +52,11 @@ public class GameManager : MonoBehaviour
         if (CurrentState != GameState.Playing)
             return;
 
-        coinCount += value;
+        curentCoin += value;
 
-        OnCoinCountChanged?.Invoke();
+        OnCoinCountChanged?.Invoke(curentCoin, coinForWin);
 
-        if (coinCount >= coinForWin)
+        if (curentCoin >= coinForWin)
         {
             WinGame();
         }
@@ -61,6 +65,7 @@ public class GameManager : MonoBehaviour
     public void WinGame()
     {
         ChangeState(GameState.Win);
+        //timerScript.PauseTimer();
         //Time.timeScale = 0f;
         OnGameWin?.Invoke();
     }
@@ -76,7 +81,7 @@ public class GameManager : MonoBehaviour
     public void ChangeState(GameState newState)
     {
         CurrentState = newState;
-        OnGameStateChanged?.Invoke(CurrentState);
+
     }
 
     public void RestartGame()

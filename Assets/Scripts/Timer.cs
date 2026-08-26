@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Timer
+public class Timer : MonoBehaviour
 {
     private float duration; // Длительность таймера в секундах
     public float RemainingTime { get; private set; } // Оставшееся время до завершения (секунды), доступно только для чтения
@@ -9,7 +9,7 @@ public class Timer
     public bool IsFinished => RemainingTime <= 0f; // Вычисляемое свойство: true, когда время вышло
 
     // События для подписки из внешних классов
-    public event Action OnTick; // Событие тика (срабатывает каждую секунду)
+    public event Action<float> OnTick; // Событие тика (срабатывает каждую секунду)
     public event Action OnFinished; // Событие завершения таймера
     private float _accumulator; // Накопитель прошедшего времени (в секундах)
     private float _lastTickTime; // Значение времени последнего срабатывания тика
@@ -66,6 +66,7 @@ public class Timer
         if (!IsRunning)
             return; // Выходим из метода, если таймер не активен
 
+        Debug.Log(RemainingTime);
         _accumulator += Time.deltaTime; // Увеличиваем накопитель на время, прошедшее с последнего кадра
 
         if (_accumulator >= RemainingTime) // Проверяем, истекло ли время таймера
@@ -73,7 +74,7 @@ public class Timer
             RemainingTime = 0f; // Устанавливаем оставшееся время в ноль
             IsRunning = false; // Останавливаем таймер
 
-            OnTick?.Invoke(); // Вызываем событие тика (оператор ?. проверяет наличие подписчиков)
+            OnTick?.Invoke(_lastTickTime); // Вызываем событие тика (оператор ?. проверяет наличие подписчиков)
             OnFinished?.Invoke(); // Вызываем событие завершения таймера
 
         }
@@ -84,7 +85,7 @@ public class Timer
             if ((int)_lastTickTime != (int)RemainingTime) // Проверяем, прошла ли целая секунда (сравнение целых частей)
             {
                 _lastTickTime = RemainingTime; // Обновляем последнее значение времени тика
-                OnTick?.Invoke(); // Вызываем событие тика
+                OnTick?.Invoke(_lastTickTime); // Вызываем событие тика
             }
         }
     }

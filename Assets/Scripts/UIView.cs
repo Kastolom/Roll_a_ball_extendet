@@ -6,6 +6,7 @@ using System.Collections;
 public class UIView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI score;
+    [SerializeField] private TextMeshProUGUI targetScore;
     [SerializeField] private GameObject infoPanel;
     [SerializeField] private GameObject yourWinText;
     [SerializeField] private GameObject loseText;
@@ -14,21 +15,44 @@ public class UIView : MonoBehaviour
     [SerializeField] private GameObject progressBarDash;
     [SerializeField] private GameObject zoomAdd;
     [SerializeField] private GameObject zoomSub;
+    [SerializeField] private TextMeshProUGUI timerText;
+    private GameManager gameManager;
 
-    void Start()
+    void OnEnable()
     {
-        GameManager.instance.OnCoinCountChanged += OnAddCoin;
-        GameManager.instance.OnGameWin += OnGameWin;
-        GameManager.instance.OnGameLose += OnGameLose;
-        GameManager.instance.OnJumpBarChange += JumpBarActivate;
-        GameManager.instance.OnDashBarChange += DashBarActivate;
-        GameManager.instance.OnZoomChange += ShowZoomInfo;
-        GameManager.instance.timerScript.OnTick += UpdateTimer;
+        GameManager.OnCoinCountChanged += OnCoinsChanged;
+        GameManager.OnGameWin += OnGameWin;
+        GameManager.OnGameLose += OnGameLose;
+        GameManager.OnJumpBarChange += JumpBarActivate;
+        GameManager.OnDashBarChange += DashBarActivate;
+        GameManager.OnZoomChange += ShowZoomInfo;      
     }
 
-    private void OnAddCoin()
+        void OnDisable ()
     {
-        score.text = GameManager.instance.coinCount.ToString();
+        GameManager.OnCoinCountChanged -= OnCoinsChanged;
+        GameManager.OnGameWin -= OnGameWin;
+        GameManager.OnGameLose -= OnGameLose;
+        GameManager.OnJumpBarChange -= JumpBarActivate;
+        GameManager.OnDashBarChange -= DashBarActivate;
+        GameManager.OnZoomChange -= ShowZoomInfo;      
+    }
+    
+    void Start()
+    {
+        gameManager = FindAnyObjectByType<GameManager>();
+
+        if (gameManager != null)
+        {
+            gameManager.timerScript.OnTick += UpdateTimer;
+            gameManager.timerScript.OnFinished += OnGameLose;
+        }
+    }
+
+    private void OnCoinsChanged(int _curentCoin, int _coinForWin)
+    {
+        score.text = _curentCoin.ToString();
+        targetScore.text = _coinForWin.ToString();
     }
 
     private void OnGameWin() // метод, вызывающийся при победе
@@ -60,9 +84,12 @@ public class UIView : MonoBehaviour
         StartCoroutine(ZoomInfoAnima(_zoom));
     }
 
-    private void UpdateTimer()
+    private void UpdateTimer(float _lastTickTime)
     {
-        
+        int totalSeconds = Mathf.CeilToInt(_lastTickTime);
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+        timerText.text = $"{minutes:D2}:{seconds:D2}";
     }
 
     IEnumerator ZoomInfoAnima(float _zoom)
@@ -78,6 +105,6 @@ public class UIView : MonoBehaviour
             zoomSub.SetActive(true);
             yield return new WaitForSeconds(1f);
             zoomSub.SetActive(false);
-        }              
+        }
     }
 }

@@ -25,7 +25,7 @@ public class MovingPlatform : MonoBehaviour
     private void Update()
     {
         float offset = Mathf.Sin(Time.time * moveSpeed) * moveDistance;
-        Debug.Log(offset);
+        //Debug.Log(offset);
         
         Vector3 newPosition = startPosition;
 

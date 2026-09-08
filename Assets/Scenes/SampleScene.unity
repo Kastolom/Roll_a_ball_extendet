@@ -1249,7 +1249,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 9, z: -11}
+  m_LocalPosition: {x: 0, y: 9.5, z: -19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1312,6 +1312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFolllow
   smoothSpeed: 0.1
+  offset: {x: 0, y: 7.5, z: -7}
   zoomSpeed: 20
   minZoom: 40
   maxZoom: 70
@@ -2717,7 +2718,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallControllen
   moveSpeed: 10
-  movementInput: {x: 0, y: 0, z: 0}
   jumpForce: 8
   jumpBarSpeed: 2
   dashForce: 10
@@ -2811,7 +2811,7 @@ Transform:
   m_GameObject: {fileID: 934245504}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: -4}
+  m_LocalPosition: {x: 0, y: 2, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3914,6 +3914,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FinishPlatform
       objectReference: {fileID: 0}
+    - target: {fileID: 2423815887308125499, guid: 4a65f9337856ab3438872495b354d42a, type: 3}
+      propertyPath: m_TagString
+      value: Finish
+      objectReference: {fileID: 0}
     - target: {fileID: 4408743151451772947, guid: 4a65f9337856ab3438872495b354d42a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.39857572
@@ -3954,8 +3958,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9201631192763675753, guid: 4a65f9337856ab3438872495b354d42a, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4267947702139210150, guid: 4a65f9337856ab3438872495b354d42a, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7485467347347091786, guid: 4a65f9337856ab3438872495b354d42a, type: 3}
@@ -4361,7 +4370,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 198.6, y: -35}
+  m_AnchoredPosition: {x: 198.59998, y: -35}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2034219978

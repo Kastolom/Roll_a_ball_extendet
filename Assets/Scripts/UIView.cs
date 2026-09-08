@@ -25,7 +25,8 @@ public class UIView : MonoBehaviour
         GameManager.OnGameLose += OnGameLose;
         GameManager.OnJumpBarChange += JumpBarActivate;
         GameManager.OnDashBarChange += DashBarActivate;
-        GameManager.OnZoomChange += ShowZoomInfo;      
+        GameManager.OnZoomChange += ShowZoomInfo;
+        Timer.OnTimerUpdated += UpdateTimer;      
     }
 
         void OnDisable ()
@@ -35,18 +36,8 @@ public class UIView : MonoBehaviour
         GameManager.OnGameLose -= OnGameLose;
         GameManager.OnJumpBarChange -= JumpBarActivate;
         GameManager.OnDashBarChange -= DashBarActivate;
-        GameManager.OnZoomChange -= ShowZoomInfo;      
-    }
-    
-    void Start()
-    {
-        gameManager = FindAnyObjectByType<GameManager>();
-
-        if (gameManager != null)
-        {
-            gameManager.timerScript.OnTick += UpdateTimer;
-            gameManager.timerScript.OnFinished += OnGameLose;
-        }
+        GameManager.OnZoomChange -= ShowZoomInfo;
+        Timer.OnTimerUpdated -= UpdateTimer;      
     }
 
     private void OnCoinsChanged(int _curentCoin, int _coinForWin)

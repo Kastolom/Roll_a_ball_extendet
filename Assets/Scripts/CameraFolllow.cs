@@ -5,7 +5,7 @@ public class CameraFolllow : MonoBehaviour
 {
     private Transform target; // цель, за которой следует камера
     [SerializeField] private float smoothSpeed; // скорость сглаживания движения камеры
-    private Vector3 offset; // смещение камеры относительно цели
+    [SerializeField] private Vector3 offset; // смещение камеры относительно цели
     private Vector3 velocity = Vector3.zero; // текущая скорость движения камеры
     [SerializeField] private float zoomSpeed; // скорость приближения/удаления камеры
     [SerializeField] private float minZoom; // минимальное приближение камеры
@@ -23,7 +23,7 @@ public class CameraFolllow : MonoBehaviour
         cam = GetComponent<Camera>();
         targetZoom = cam.fieldOfView;
         target = ballController.transform;
-        offset = transform.position - target.position; // вычисляем смещение камеры относительно цели
+        //offset = transform.position - target.position; // вычисляем смещение камеры относительно цели
     }
     private void LateUpdate() // метод, вызывающийся после всех обновлений в кадре
     {

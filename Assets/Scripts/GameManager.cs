@@ -19,18 +19,16 @@ public class GameManager : MonoBehaviour
 
     void OnEnable()
     {
-        timerScript.OnFinished += LoseGame;
+        Timer.OnTimeIsUp += LoseGame;
     }
     void OnDisable()
     {
-        timerScript.OnFinished -= LoseGame;
+        Timer.OnTimeIsUp -= LoseGame;
     }
     private void Start() // метод, вызывающийся при старте игры
     {
         Application.targetFrameRate = 120; // устанавливаем частоту кадров
-        ChangeState(GameState.Playing);
-        timerScript.StartTimer(20);
-        OnCoinCountChanged?.Invoke(curentCoin, coinForWin);
+        ChangeState(GameState.Start);
     }
 
     private void Update() // метод, вызывающийся каждый кадр
@@ -54,43 +52,47 @@ public class GameManager : MonoBehaviour
 
         curentCoin += value;
 
-        OnCoinCountChanged?.Invoke(curentCoin, coinForWin);
+        OnCoinCountChanged?.Invoke(curentCoin, coinForWin); 
 
-        if (curentCoin >= coinForWin)
+        //CheckWinGame();
+    }
+
+    public void StartGame()
+    {
+        if (CurrentState == GameState.Start)
         {
-            WinGame();
+            ChangeState(GameState.Playing);
+            timerScript.StartTimer(30);
+            OnCoinCountChanged?.Invoke(curentCoin, coinForWin);
         }
     }
 
-    public void WinGame()
+    public void RestartGame()
     {
-        ChangeState(GameState.Win);
-        //timerScript.PauseTimer();
-        //Time.timeScale = 0f;
-        OnGameWin?.Invoke();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void CheckWinGame()
+    {
+        if (curentCoin >= coinForWin && timerScript.IsRunning)
+        {
+            ChangeState(GameState.Win);
+            OnGameWin?.Invoke();
+        }
     }
 
     public void LoseGame()
     {
         ChangeState(GameState.Lose);
-
-        Time.timeScale = 0f;
         OnGameLose?.Invoke();
     }
 
     public void ChangeState(GameState newState)
     {
         CurrentState = newState;
-
     }
 
-    public void RestartGame()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-    
-    public void JumpBarChange( float _jumpBarCurent)
+    public void JumpBarChange(float _jumpBarCurent)
     {
         OnJumpBarChange?.Invoke(_jumpBarCurent);
     }

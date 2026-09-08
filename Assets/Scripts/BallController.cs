@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class BallController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 10f; // скорость движения шара
-    [SerializeField] private Vector3 movementInput; // вектор направления движения
+    private Vector3 movementInput; // вектор направления движения
     [SerializeField] private float jumpForce = 5f; // максимальная сила прыжка
     private float jumpForceCurent; // текущее значение силы прыжка
     [SerializeField] private float jumpBarSpeed = 2f; // скорость заполнения полосы прыжка]
@@ -20,6 +20,14 @@ public class BallController : MonoBehaviour
     private bool isGrounded; // флаг, находится ли шар на земле
     private GameManager gameManager;
 
+    void OnEnable()
+    {
+        GameManager.OnGameLose += StopMoving;
+    }
+    void OnDisable()
+    {
+        GameManager.OnGameLose -= StopMoving;
+    }
 
     void Start()
     {
@@ -29,7 +37,7 @@ public class BallController : MonoBehaviour
 
     void Update()
     {
-        if (gameManager.CurrentState != GameState.Playing)
+        if (gameManager.CurrentState != GameState.Playing && gameManager.CurrentState != GameState.Start)
             return;
         // считываем ввод с клавиатуры/геймпада по осям
         movementInput.x = Input.GetAxis("Horizontal"); // лево-право (A/D, стрелки)
@@ -80,7 +88,8 @@ public class BallController : MonoBehaviour
         if (transform.position.y < loseYLevel)
         {
             gameManager.LoseGame();
-            StopMoving();
+            // StopMoving();
+            // gameManager.LoseGame();
         }
     }
 
@@ -92,7 +101,7 @@ public class BallController : MonoBehaviour
 
     void FixedUpdate() 
     {
-        if (gameManager.CurrentState != GameState.Playing)
+        if (gameManager.CurrentState != GameState.Playing && gameManager.CurrentState != GameState.Start)
             return;
         // применяем силу к Rigidbody для физического движения
         rb.AddForce(movementInput * moveSpeed);
@@ -121,5 +130,23 @@ public class BallController : MonoBehaviour
             if (curentColiders.Count == 0)
                 isGrounded = false;
         }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Start"))
+        {
+            gameManager.StartGame();
+        }
+        
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            gameManager.CheckWinGame();
+        }
+        
     }
 }

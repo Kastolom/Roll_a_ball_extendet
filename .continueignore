@@ -1,0 +1,15 @@
+# Исключение временных и сгенерированных папок Unity из индекса Continue
+.git/
+.idea/
+.vscode/
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+*.log
+
+# Дополнительно: тяжелые форматы данных (например, 3D-исходники или бинарники)
+*.bin

@@ -2698,6 +2698,7 @@ GameObject:
   - component: {fileID: 934245506}
   - component: {fileID: 934245505}
   - component: {fileID: 934245510}
+  - component: {fileID: 934245511}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Player
@@ -2844,6 +2845,27 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &934245511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934245504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69ece37a3916a3a44bff6a32558b13f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallController_Advanced
+  maxSpeed: 5
+  acceleration: 20
+  friction: 0.8
+  jumpForce: 8
+  groundLayer:
+    m_Bits: 0
+  groundCheckDistance: 0.2
+  rb: {fileID: 0}
+  isGrounded: 0
 --- !u!4 &954317080 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5773877129504154283, guid: ed84027f09774b142a06fcef9d5f81d5, type: 3}

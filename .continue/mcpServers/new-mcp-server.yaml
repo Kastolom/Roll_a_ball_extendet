@@ -1,0 +1,9 @@
+name: Unity MCP Server
+version: 0.0.1
+schema: v1
+mcpServers:
+  - name: unity-mcp
+    type: stdio
+    command: "C:/Users/kasto/.unity/relay/relay_win.exe"
+    args:
+      - "--mcp"

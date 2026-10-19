@@ -2,18 +2,18 @@ using UnityEngine;
 using System.Collections;
 public class WallPusher : MonoBehaviour
 {
-    [Header("Íàñòðîéêè ïîðøíÿ")]
-    [SerializeField] private bool isActive = true;          // àêòèâåí ëè ìåõàíèçì
-    [SerializeField] private float pushDistance = 3f;       // äèñòàíöèÿ âûäâèæåíèÿ êóáà
-    [SerializeField] private float pushSpeed = 3f;          // ñêîðîñòü âûäâèæåíèÿ
-    [SerializeField] private float retractSpeed = 3f;       // ñêîðîñòü âîçâðàòà
-    [SerializeField] private float delayBeforePush = 2f;    // çàäåðæêà ïåðåä âûäâèæåíèåì
-    [SerializeField] private float delayBeforeRetract = 1f; // çàäåðæêà ïåðåä âîçâðàòîì
-    [Header("Íàñòðîéêà íàïðàâëåíèÿ")]
-    [SerializeField] private Vector3 pushDirection = Vector3.forward; // íàïðàâëåíèå âûäâèæåíèÿ
-    [Header("Íàñòðîéêà èãðîêà")]
-    [SerializeField] private string playerTag = "Player";   // òåã øàðèêà
-    [SerializeField] private float knockbackForce = 10f;    // ñèëà âûòàëêèâàíèÿ (äîï. èìïóëüñ)
+    [Header("ÐÐ°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ¸ Ð¿Ð¾Ñ€ÑˆÐ½Ñ")]
+    [SerializeField] private bool isActive = true;          // Ð°ÐºÑ‚Ð¸Ð²ÐµÐ½ Ð»Ð¸ Ð¼ÐµÑ…Ð°Ð½Ð¸Ð·Ð¼
+    [SerializeField] private float pushDistance = 3f;       // Ð´Ð¸ÑÑ‚Ð°Ð½Ñ†Ð¸Ñ Ð²Ñ‹Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ñ ÐºÑƒÐ±Ð°
+    [SerializeField] private float pushSpeed = 3f;          // ÑÐºÐ¾Ñ€Ð¾ÑÑ‚ÑŒ Ð²Ñ‹Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ñ
+    [SerializeField] private float retractSpeed = 3f;       // ÑÐºÐ¾Ñ€Ð¾ÑÑ‚ÑŒ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ð°
+    [SerializeField] private float delayBeforePush = 2f;    // Ð·Ð°Ð´ÐµÑ€Ð¶ÐºÐ° Ð¿ÐµÑ€ÐµÐ´ Ð²Ñ‹Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸ÐµÐ¼
+    [SerializeField] private float delayBeforeRetract = 1f; // Ð·Ð°Ð´ÐµÑ€Ð¶ÐºÐ° Ð¿ÐµÑ€ÐµÐ´ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ð¾Ð¼
+    [Header("ÐÐ°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ° Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ñ")]
+    [SerializeField] private Vector3 pushDirection = Vector3.forward; // Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð²Ñ‹Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ñ
+    [Header("ÐÐ°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ° Ð¸Ð³Ñ€Ð¾ÐºÐ°")]
+    [SerializeField] private string playerTag = "Player";   // Ñ‚ÐµÐ³ ÑˆÐ°Ñ€Ð¸ÐºÐ°
+    [SerializeField] private float knockbackForce = 10f;    // ÑÐ¸Ð»Ð° Ð²Ñ‹Ñ‚Ð°Ð»ÐºÐ¸Ð²Ð°Ð½Ð¸Ñ (Ð´Ð¾Ð¿. Ð¸Ð¼Ð¿ÑƒÐ»ÑŒÑ)
     private Vector3 startPosition;
     private Vector3 endPosition;
     private bool isPushing = false;
@@ -31,9 +31,9 @@ public class WallPusher : MonoBehaviour
     {
         while (true)
         {
-            // Æä¸ì ïåðåä âûäâèæåíèåì
+            // Ð–Ð´Ñ‘Ð¼ Ð¿ÐµÑ€ÐµÐ´ Ð²Ñ‹Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸ÐµÐ¼
             yield return new WaitForSeconds(delayBeforePush);
-            // Âûäâèãàåì êóá
+            // Ð’Ñ‹Ð´Ð²Ð¸Ð³Ð°ÐµÐ¼ ÐºÑƒÐ±
             isPushing = true;
             while (Vector3.Distance(transform.position, endPosition) > 0.05f)
             {
@@ -41,9 +41,9 @@ public class WallPusher : MonoBehaviour
                 yield return null;
             }
             transform.position = endPosition;
-            // Æä¸ì ïåðåä âîçâðàòîì
+            // Ð–Ð´Ñ‘Ð¼ Ð¿ÐµÑ€ÐµÐ´ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ð¾Ð¼
             yield return new WaitForSeconds(delayBeforeRetract);
-            // Âîçâðàùàåì êóá
+            // Ð’Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÐ¼ ÐºÑƒÐ±
             isPushing = false;
             while (Vector3.Distance(transform.position, startPosition) > 0.05f)
             {

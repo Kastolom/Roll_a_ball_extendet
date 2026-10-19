@@ -1,17 +1,17 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.SceneManagement; // Добавлено для возможности перезагрузки сцены
+using UnityEngine.SceneManagement; // Р”РѕР±Р°РІР»РµРЅРѕ РґР»СЏ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РїРµСЂРµР·Р°РіСЂСѓР·РєРё СЃС†РµРЅС‹
 
 public class Mill : MonoBehaviour
 {
-    [Header("Для вращающейся мельницы")]
-    [SerializeField] private bool isRotating; // вращается ли мельница
-    [SerializeField] private float rotateSpeed; // скорость вращения мельницы
-    [SerializeField] private Vector3 rotateDirection; // направление вращения мельницы (ось)
+    [Header("Р”Р»СЏ РІСЂР°С‰Р°СЋС‰РµР№СЃСЏ РјРµР»СЊРЅРёС†С‹")]
+    [SerializeField] private bool isRotating; // РІСЂР°С‰Р°РµС‚СЃСЏ Р»Рё РјРµР»СЊРЅРёС†Р°
+    [SerializeField] private float rotateSpeed; // СЃРєРѕСЂРѕСЃС‚СЊ РІСЂР°С‰РµРЅРёСЏ РјРµР»СЊРЅРёС†С‹
+    [SerializeField] private Vector3 rotateDirection; // РЅР°РїСЂР°РІР»РµРЅРёРµ РІСЂР°С‰РµРЅРёСЏ РјРµР»СЊРЅРёС†С‹ (РѕСЃСЊ)
 
-    [Header("Для настройки проигрыша")]
-    [SerializeField] private string playerTag = "Player"; // Тег шарика-игрока
-    [SerializeField] private bool restartSceneOnLose; // перезагружать ли сцену при проигрыше
+    [Header("Р”Р»СЏ РЅР°СЃС‚СЂРѕР№РєРё РїСЂРѕРёРіСЂС‹С€Р°")]
+    [SerializeField] private string playerTag = "Player"; // РўРµРі С€Р°СЂРёРєР°-РёРіСЂРѕРєР°
+    [SerializeField] private bool restartSceneOnLose; // РїРµСЂРµР·Р°РіСЂСѓР¶Р°С‚СЊ Р»Рё СЃС†РµРЅСѓ РїСЂРё РїСЂРѕРёРіСЂС‹С€Рµ
 
     void Start()
     {
@@ -29,7 +29,7 @@ public class Mill : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        // Проверяем, что столкновение произошло именно с игроком (шариком)
+        // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ РїСЂРѕРёР·РѕС€Р»Рѕ РёРјРµРЅРЅРѕ СЃ РёРіСЂРѕРєРѕРј (С€Р°СЂРёРєРѕРј)
         if (collision.gameObject.CompareTag(playerTag))
         {
             StartCoroutine(PlayerLoseAnima(collision.gameObject));
@@ -38,9 +38,9 @@ public class Mill : MonoBehaviour
 
     IEnumerator PlayerLoseAnima(GameObject player)
     {
-        Debug.Log("Игрок проиграл! Касание лопастей мельницы.");
+        Debug.Log("РРіСЂРѕРє РїСЂРѕРёРіСЂР°Р»! РљР°СЃР°РЅРёРµ Р»РѕРїР°СЃС‚РµР№ РјРµР»СЊРЅРёС†С‹.");
 
-        // Визуальный эффект проигрыша 
+        // Р’РёР·СѓР°Р»СЊРЅС‹Р№ СЌС„С„РµРєС‚ РїСЂРѕРёРіСЂС‹С€Р° 
         Renderer playerRenderer = player.GetComponent<Renderer>();
         if (playerRenderer != null)
         {
@@ -56,15 +56,15 @@ public class Mill : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
         }
 
-        // Основное действие при проигрыше
+        // РћСЃРЅРѕРІРЅРѕРµ РґРµР№СЃС‚РІРёРµ РїСЂРё РїСЂРѕРёРіСЂС‹С€Рµ
         if (restartSceneOnLose)
         {
-            // Перезагружаем текущую сцену для рестарта
+            // РџРµСЂРµР·Р°РіСЂСѓР¶Р°РµРј С‚РµРєСѓС‰СѓСЋ СЃС†РµРЅСѓ РґР»СЏ СЂРµСЃС‚Р°СЂС‚Р°
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         else
         {
-            // Альтернативный вариант 1: просто уничтожить шарик
+            // РђР»СЊС‚РµСЂРЅР°С‚РёРІРЅС‹Р№ РІР°СЂРёР°РЅС‚ 1: РїСЂРѕСЃС‚Рѕ СѓРЅРёС‡С‚РѕР¶РёС‚СЊ С€Р°СЂРёРє
             // Destroy(player);
 
         }

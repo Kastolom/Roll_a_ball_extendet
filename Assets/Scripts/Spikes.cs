@@ -2,13 +2,13 @@ using UnityEngine;
 using System.Collections;
 public class Spikes : MonoBehaviour
 {
-    [Header("Для выдвижных шипов")]
-    [SerializeField] private bool isPopping = true;     // выдвигаются ли шипы
-    [SerializeField] private float popSpeed = 3f;       // скорость выдвижения
-    [SerializeField] private float popHeight = 1.5f;    // высота выдвижения
-    [SerializeField] private float stayUpTime = 1.5f;   // сколько торчат
-    [SerializeField] private float stayDownTime = 1.5f; // сколько спрятаны
-    [Header("Для настройки проигрыша")]
+    [Header("Р”Р»СЏ РІС‹РґРІРёР¶РЅС‹С… С€РёРїРѕРІ")]
+    [SerializeField] private bool isPopping = true;     // РІС‹РґРІРёРіР°СЋС‚СЃСЏ Р»Рё С€РёРїС‹
+    [SerializeField] private float popSpeed = 3f;       // СЃРєРѕСЂРѕСЃС‚СЊ РІС‹РґРІРёР¶РµРЅРёСЏ
+    [SerializeField] private float popHeight = 1.5f;    // РІС‹СЃРѕС‚Р° РІС‹РґРІРёР¶РµРЅРёСЏ
+    [SerializeField] private float stayUpTime = 1.5f;   // СЃРєРѕР»СЊРєРѕ С‚РѕСЂС‡Р°С‚
+    [SerializeField] private float stayDownTime = 1.5f; // СЃРєРѕР»СЊРєРѕ СЃРїСЂСЏС‚Р°РЅС‹
+    [Header("Р”Р»СЏ РЅР°СЃС‚СЂРѕР№РєРё РїСЂРѕРёРіСЂС‹С€Р°")]
     [SerializeField] private string playerTag = "Player";
     private Vector3 startPosition;
     private Vector3 upPosition;
@@ -24,23 +24,23 @@ public class Spikes : MonoBehaviour
     {
         while (true)
         {
-            // 1. Выдвигаем вверх
+            // 1. Р’С‹РґРІРёРіР°РµРј РІРІРµСЂС…
             while (Vector3.Distance(transform.localPosition, upPosition) > 0.05f)
             {
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, upPosition, popSpeed * Time.deltaTime);
                 yield return null;
             }
             transform.localPosition = upPosition;
-            // 2. Ждем
+            // 2. Р–РґРµРј
             yield return new WaitForSeconds(stayUpTime);
-            // 3. Прячем в землю
+            // 3. РџСЂСЏС‡РµРј РІ Р·РµРјР»СЋ
             while (Vector3.Distance(transform.localPosition, startPosition) > 0.05f)
             {
                 transform.localPosition = Vector3.MoveTowards(transform.localPosition, startPosition, popSpeed * Time.deltaTime);
                 yield return null;
             }
             transform.localPosition = startPosition;
-            // 4. Ждем перед следующим циклом
+            // 4. Р–РґРµРј РїРµСЂРµРґ СЃР»РµРґСѓСЋС‰РёРј С†РёРєР»РѕРј
             yield return new WaitForSeconds(stayDownTime);
         }
     }

@@ -1,14 +1,14 @@
 using UnityEngine;
 public class Seesaw : MonoBehaviour
 {
-    [Header("Настройки качелей")]
-    [SerializeField] private float tiltSpeed = 2f;              // скорость наклона
-    [SerializeField] private float maxTiltAngle = 25f;          // максимальный угол наклона
-    [SerializeField] private float detectionRange = 5f;         // радиус обнаружения игрока
-    [Header("Настройка оси вращения")]
-    [SerializeField] private Vector3 tiltAxis = Vector3.right;  // ось наклона
-    [Header("Настройка игрока")]
-    [SerializeField] private string playerTag = "Player";       // тег игрока
+    [Header("РќР°СЃС‚СЂРѕР№РєРё РєР°С‡РµР»РµР№")]
+    [SerializeField] private float tiltSpeed = 2f;              // СЃРєРѕСЂРѕСЃС‚СЊ РЅР°РєР»РѕРЅР°
+    [SerializeField] private float maxTiltAngle = 25f;          // РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СѓРіРѕР» РЅР°РєР»РѕРЅР°
+    [SerializeField] private float detectionRange = 5f;         // СЂР°РґРёСѓСЃ РѕР±РЅР°СЂСѓР¶РµРЅРёСЏ РёРіСЂРѕРєР°
+    [Header("РќР°СЃС‚СЂРѕР№РєР° РѕСЃРё РІСЂР°С‰РµРЅРёСЏ")]
+    [SerializeField] private Vector3 tiltAxis = Vector3.right;  // РѕСЃСЊ РЅР°РєР»РѕРЅР°
+    [Header("РќР°СЃС‚СЂРѕР№РєР° РёРіСЂРѕРєР°")]
+    [SerializeField] private string playerTag = "Player";       // С‚РµРі РёРіСЂРѕРєР°
     private Transform playerTransform;
     private float currentTilt = 0f;
     private float targetTilt = 0f;
@@ -23,7 +23,7 @@ public class Seesaw : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Игрок с тегом " + playerTag + " не найден!");
+            Debug.LogWarning("РРіСЂРѕРє СЃ С‚РµРіРѕРј " + playerTag + " РЅРµ РЅР°Р№РґРµРЅ!");
         }
     }
     void Update()

@@ -2,12 +2,12 @@ using UnityEngine;
 using System.Collections;
 public class BlinkingPlatform : MonoBehaviour
 {
-    [Header("Для мигающей платформы")]
-    [SerializeField] private float visibleTime = 3f;        // сколько секунд платформа видна
-    [SerializeField] private float hiddenTime = 2f;         // сколько секунд платформа невидима
-    [SerializeField] private float fadeDuration = 1f;       // время плавного потускнения перед исчезновением
-    [Header("Настройка прозрачности")]
-    [SerializeField] private float minAlpha = 0.2f;         // минимальная прозрачность при потускнении (0 = полностью невидима)
+    [Header("Р”Р»СЏ РјРёРіР°СЋС‰РµР№ РїР»Р°С‚С„РѕСЂРјС‹")]
+    [SerializeField] private float visibleTime = 3f;        // СЃРєРѕР»СЊРєРѕ СЃРµРєСѓРЅРґ РїР»Р°С‚С„РѕСЂРјР° РІРёРґРЅР°
+    [SerializeField] private float hiddenTime = 2f;         // СЃРєРѕР»СЊРєРѕ СЃРµРєСѓРЅРґ РїР»Р°С‚С„РѕСЂРјР° РЅРµРІРёРґРёРјР°
+    [SerializeField] private float fadeDuration = 1f;       // РІСЂРµРјСЏ РїР»Р°РІРЅРѕРіРѕ РїРѕС‚СѓСЃРєРЅРµРЅРёСЏ РїРµСЂРµРґ РёСЃС‡РµР·РЅРѕРІРµРЅРёРµРј
+    [Header("РќР°СЃС‚СЂРѕР№РєР° РїСЂРѕР·СЂР°С‡РЅРѕСЃС‚Рё")]
+    [SerializeField] private float minAlpha = 0.2f;         // РјРёРЅРёРјР°Р»СЊРЅР°СЏ РїСЂРѕР·СЂР°С‡РЅРѕСЃС‚СЊ РїСЂРё РїРѕС‚СѓСЃРєРЅРµРЅРёРё (0 = РїРѕР»РЅРѕСЃС‚СЊСЋ РЅРµРІРёРґРёРјР°)
     private Renderer _renderer;
     private Collider _collider;
     private Material _material;
@@ -20,7 +20,7 @@ public class BlinkingPlatform : MonoBehaviour
         {
             _material = _renderer.material;
             _originalColor = _material.color;
-            // Устанавливаем полную видимость при старте
+            // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РїРѕР»РЅСѓСЋ РІРёРґРёРјРѕСЃС‚СЊ РїСЂРё СЃС‚Р°СЂС‚Рµ
             SetAlpha(1f);
         }
         StartCoroutine(BlinkAnima());
@@ -29,22 +29,22 @@ public class BlinkingPlatform : MonoBehaviour
     {
         while (true)
         {
-            // 1. Платформа полностью видна и тверда
+            // 1. РџР»Р°С‚С„РѕСЂРјР° РїРѕР»РЅРѕСЃС‚СЊСЋ РІРёРґРЅР° Рё С‚РІРµСЂРґР°
             SetPlatformState(true);
             SetAlpha(1f);
             yield return new WaitForSeconds(visibleTime - fadeDuration);
-            // 2. Плавное потускнение (платформа еще твердая!)
+            // 2. РџР»Р°РІРЅРѕРµ РїРѕС‚СѓСЃРєРЅРµРЅРёРµ (РїР»Р°С‚С„РѕСЂРјР° РµС‰Рµ С‚РІРµСЂРґР°СЏ!)
             float timer = 0f;
             while (timer < fadeDuration)
             {
                 timer += Time.deltaTime;
-                float progress = timer / fadeDuration; // от 0 до 1
+                float progress = timer / fadeDuration; // РѕС‚ 0 РґРѕ 1
                 float currentAlpha = Mathf.Lerp(1f, minAlpha, progress);
                 SetAlpha(currentAlpha);
                 yield return null;
             }
             SetAlpha(minAlpha);
-            // 3. Платформа исчезает полностью и становится не твердой
+            // 3. РџР»Р°С‚С„РѕСЂРјР° РёСЃС‡РµР·Р°РµС‚ РїРѕР»РЅРѕСЃС‚СЊСЋ Рё СЃС‚Р°РЅРѕРІРёС‚СЃСЏ РЅРµ С‚РІРµСЂРґРѕР№
             SetPlatformState(false);
             yield return new WaitForSeconds(hiddenTime);
         }

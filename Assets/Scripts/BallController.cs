@@ -98,6 +98,7 @@ public class BallController : MonoBehaviour
             // Если игрок куда-то движется, делаем рывок в этом направлении
             if (dashDirection.magnitude > 0.1f)
             {
+                //rb.AddForce(dashDirection.normalized * dashForceCurent, ForceMode.Impulse);
                 rb.AddForce(dashDirection.normalized * dashForceCurent, ForceMode.Impulse);
             }
 
@@ -144,7 +145,8 @@ public class BallController : MonoBehaviour
             Vector3 targetDirection = (camForward * movementInput.z) + (camRight * movementInput.x);
 
             // Применяем силу к Rigidbody для физического движения
-            rb.AddForce(targetDirection * moveSpeed);
+            rb.AddForce(targetDirection * moveSpeed, ForceMode.Force);
+            //rb.AddForce(targetDirection * moveSpeed);
         }
     }
 

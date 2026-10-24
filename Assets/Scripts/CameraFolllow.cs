@@ -66,7 +66,7 @@ public class CameraFollow : MonoBehaviour
         currentAngle = Mathf.SmoothDampAngle(currentAngle, targetAngle, ref rotationVelocity, rotationSmoothTime);
 
         Quaternion horizontalRotation = Quaternion.Euler(0, currentAngle, 0);
-        Vector3 desiredPosition = target.position + (horizontalRotation * offset);
+        Vector3 desiredPosition = target.position + (horizontalRotation * offset) + currentShakeOffset;
         Quaternion desiredRotation = Quaternion.Euler(cameraPitch, currentAngle, 0f);
 
         transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, positionSmoothTime);
@@ -76,7 +76,7 @@ public class CameraFollow : MonoBehaviour
         if (currentShakeOffset.magnitude > 0)
         {
             currentShakeOffset = Vector3.Lerp(currentShakeOffset, Vector3.zero, Time.deltaTime * 10f);
-            if (currentShakeOffset.magnitude < 0.001f) currentShakeOffset = Vector3.zero;
+            if (currentShakeOffset.sqrMagnitude < 0.001f) currentShakeOffset = Vector3.zero;
         }
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");

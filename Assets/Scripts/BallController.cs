@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class BallController : MonoBehaviour
+public class BallController : MonoBehaviour //Комментарий
 {
     [SerializeField] private float moveSpeed = 10f; // скорость движения шара
     private Vector3 movementInput; // вектор направления движения
